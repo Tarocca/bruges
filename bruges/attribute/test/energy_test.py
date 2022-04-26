@@ -2,13 +2,13 @@
 """
 Tests.
 """
-import unittest
+import pytest
 from numpy import linspace, sin, pi, amax
 
 from bruges.attribute import energy
 
 
-class EnergyTest(unittest.TestCase):
+class TestEnergy():
 
     def setUp(self):
         """
@@ -22,20 +22,20 @@ class EnergyTest(unittest.TestCase):
 
         self.data = sin(w * t)
 
+        return self.data
+
     def test_amplitude(self):
         """
         Tests the basic algorithm returns the right amplitude
         location.
         """
+        self.data = self.setUp()
+
         amplitude = energy(self.data, self.n_samples)
         max_amp = amax(amplitude)
 
         ms_sin = 0.5  # The MS energy of a sin wave
-        self.assertAlmostEquals(ms_sin, max_amp, places=3)
+        assert(ms_sin, pytest.approx(max_amp, 1e-2))
 
         # Check that it is in the right location
-        self.assertAlmostEqual(max_amp, amplitude[501], places=3)
-
-if __name__ == '__main__':
-    suite = unittest.TestLoader().loadTestsFromTestCase(EnergyTest)
-    unittest.TextTestRunner(verbosity=2).run(suite)
+        assert(max_amp, pytest.approx(amplitude[501], 1e-2))

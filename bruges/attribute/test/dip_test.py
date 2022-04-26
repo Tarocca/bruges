@@ -1,11 +1,11 @@
-import unittest
+
 import numpy as np
 
 from bruges.attribute import dipsteer
 from bruges.filters import ricker
 
 
-class DipTest(unittest.TestCase):
+class TestDip:
 
     # Parking this failing test; I'm not convinced that the dipsteer
     # function is working correctly.
@@ -84,9 +84,5 @@ class DipTest(unittest.TestCase):
         test[(test.size//2)] = 1
         test[(test.size//2)+1:] = 2
 
-        self.assertTrue(np.allclose(test, check))
+        assert(np.allclose(test, check))
 
-
-if __name__ == '__main__':
-    suite = unittest.TestLoader().loadTestsFromTestCase(DipTest)
-    unittest.TextTestRunner(verbosity=2).run(suite)
